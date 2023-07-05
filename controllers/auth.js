@@ -6,8 +6,18 @@ const register = async(req, res, next) => {
     //Pass the body object of the request to the db.
     const user = await User.create({...req.body})
     const token = user.genJWT() //generate the JsonWeb Token.
-    //return the token, email, and username to the frontend.
-    res.status(200).json({user:{name:user.name, email:user.email}, token})
+    //Return the pertinent user information and new token.
+    res.status(201).json({
+        user:{
+            firstName:user.firstName,
+            lastName:user.lastName,
+            state: user.state,
+            city: user.city,
+            zip: user.zip,
+            email: user.email,
+            token,
+        },
+    })
 }
 
 //Authenticate the user and return a new token, and user info.
@@ -31,10 +41,19 @@ const login = async(req, res, next) => {
 
    //Create a new token for the authenticated user.
    const token = user.genJWT();
-   //Send pertinent informaiton and the token back.
-   res.status(200).json({user:{name:user.name, email:user.email}, token})
+   //Return the pertinent user information and new token.
+   res.status(200).json({
+    user:{
+        firstName:user.firstName,
+        lastName:user.lastName,
+        state: user.state,
+        city: user.city,
+        zip: user.zip,
+        email: user.email,
+        token,
+    },
+    })
 }
-
 module.exports = {
     register,
     login,

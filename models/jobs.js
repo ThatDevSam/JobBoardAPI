@@ -17,6 +17,16 @@ const JobSchema = new mongoose.Schema({
         enum: ['applied', 'underconsideration', 'interview', 'pending', 'declined'],
         default: 'pending'
     },
+    jobType: {
+        type: String,
+        enum: ['full-time', 'part-time', 'remote', 'intership'],
+        default: 'full-time'
+    },
+    jobLocation: {
+        type: String,
+        default: 'United States',
+        required: [true, 'Please provide a job location']
+    },
     createdBy: {
         //This ties the job post to the user that created it.
         type: mongoose.Types.ObjectId, 
